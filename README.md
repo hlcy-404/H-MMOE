@@ -2,7 +2,7 @@
 
 This is the initial version of the Real-RSCM dataset and FG-MOE Framework. 
 
-[Full project about RSCMQA](https://github.com/shenyedepisa/RSCMQA).
+[Full project about RSCMQA](https://github.com/hlcy-404/H-MMOE.git)).
 
 ### Installation
 
@@ -58,15 +58,6 @@ python main.py
 
 ![](https://i.meee.com.tw/gxerqE2.png)
 
-### Citation
-
-```
-@unpublished{CM_MMoE_2025_ICME,
-  title = {Challenging Dataset and Multi-modal Gated Mixture of Experts Model for Remote Sensing Copy-Move Forgery Understanding},
-  month = {6},
-  year = {2025}
-}
-```
 
 ### License
 
