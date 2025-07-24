@@ -1,6 +1,6 @@
 # Challenging Dataset and Filter-Group Mixture-of-Experts Model for Remote Sensing Forged Target Perception Understanding
 
-This is the initial version of the Real-RSCM dataset and FG-MMoE Framework. 
+This is the initial version of the Real-RSCM dataset and FG-MoE Framework. 
 
 ### Installation
 
