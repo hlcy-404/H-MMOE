@@ -1,8 +1,6 @@
-# Challenging Dataset and Filter-Group Mixture-of-Experts Model for Remote Sensing Forged Target Perception
+# Challenging Dataset and Filter-Group Mixture-of-Experts Model for Remote Sensing Forged Target Perception Understanding
 
-This is the initial version of the Real-RSCM dataset and FG-MOE Framework. 
-
-[Full project about RSCMQA](https://github.com/hlcy-404/H-MMOE.git)).
+This is the initial version of the Real-RSCM dataset and FG-MMoE Framework. 
 
 ### Installation
 
@@ -58,9 +56,8 @@ python main.py
 
 ![](https://i.meee.com.tw/gxerqE2.png)
 
+### Citation
 
 ### License
-
-[**CC BY-NC-SA 4.0**](https://creativecommons.org/licenses/by-nc-sa/4.0/deed.en)
 
 All images and their associated annotations in Global-TQA can be used for academic purposes only, **but any commercial use is prohibited.**

@@ -10,10 +10,6 @@ import wandb
 from test import test_model
 import torch.nn.functional as F
 from models import maskModel, CDModel
-# 从feature_extractor导入save_features_hook
-# from models.feature_extractor import save_features_hook
-# 导入新的可视化器
-from models.feature_visualizer import MMoEVisualizer, save_features_hook
 
 
 def train(_config, train_dataset, val_dataset, test_dataset, device, question_vocab):
@@ -196,16 +192,6 @@ def train(_config, train_dataset, val_dataset, test_dataset, device, question_vo
     called = False
     model.to(device)
     steps = 0
-    # 设置特征保存目录
-    feature_save_dir = os.path.join(saveDir, "tsne_features")
-    if not os.path.exists(feature_save_dir):
-        os.makedirs(feature_save_dir)
-
-    # 创建可视化器
-    visualizer = MMoEVisualizer(save_dir=feature_save_dir)
-    # 设置特征保存间隔
-    feature_save_interval = 5  # 每5个epoch保存一次特征
-
     for epoch in range(num_epochs):
         # train
         model.train()
@@ -232,7 +218,7 @@ def train(_config, train_dataset, val_dataset, test_dataset, device, question_vo
             rmse = torch.sqrt(mse)
             acc_loss = criterion(pred, answer)
 
-            loss = 0.3 * rmse + 0.7 * acc_loss + moe_loss 
+            loss = 0.3 * rmse + 0.7 * acc_loss + moe_loss
             # The ground truth of mask has not been normalized. (Which is intuitively weird)
             # This may be modified in future versions, but currently this method works better than directly normalizing the mask
             if not _config['normalize']:
@@ -447,49 +433,6 @@ def train(_config, train_dataset, val_dataset, test_dataset, device, question_vo
                     step=epoch,
                 )
         torch.save(model.state_dict(), f"{saveDir}lastValModel.pth")
-
-        # 在验证后生成t-SNE可视化
-        if epoch % feature_save_interval == 0 or epoch == num_epochs - 1:
-            logger.info(f"生成epoch {epoch}的t-SNE可视化...")
-            try:
-                visualizer.visualize_from_model(
-                    model=model,
-                    data_loader=val_loader,
-                    device=device,
-                    epoch=epoch,
-                    num_samples=3000,  # 使用3000个样本，平衡速度和质量
-                    batch_process=True  # 使用批处理模式减少内存使用
-                )
-            except Exception as e:
-                logger.info(f"生成可视化时出错: {e}")
-                import traceback
-                traceback.print_exc()
-
-    # 训练结束后，使用测试集生成最终的t-SNE可视化
-    logger.info("训练完成，生成最终t-SNE可视化...")
-    try:
-        # 生成普通t-SNE可视化
-        visualizer.visualize_from_model(
-            model=model,
-            data_loader=test_loader,
-            device=device,
-            num_samples=5000,
-            batch_process=True  # 使用批处理模式减少内存使用
-        )
-        
-        # 生成专家贡献可视化
-        visualizer.visualize_experts_contribution(
-            model=model,
-            data_loader=test_loader,
-            device=device,
-            save_path=os.path.join(feature_save_dir, "expert_contribution.png"),
-            num_samples=3000
-        )
-    except Exception as e:
-        logger.info(f"生成最终可视化时出错: {e}")
-        import traceback
-        traceback.print_exc()
-
     test_model(
         _config,
         model,
