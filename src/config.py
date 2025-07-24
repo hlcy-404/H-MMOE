@@ -8,7 +8,7 @@ ex = Experiment("CM-MMoE", save_git_info=False)
 def config():
     # save
     use_wandb = True
-    subDir = "full-system-0.1"
+    subDir = "full-system-experts"
 
     # Wandb Config
     # https://docs.wandb.ai/quickstart/
@@ -25,12 +25,13 @@ def config():
     TOP = 3
     # 专家类型配置
     EXPERT_TYPES = [
-        'standard',     # 标准专家 (SiLU激活)
-        'sobel',        # 边缘检测专家 (Mish激活)
-        'schmid',       # 纹理特征专家 (ELU激活)
-        'wavelet',     # 多尺度分析专家 (LeakyReLU激活)
-        'gabor', 
+        'standard',        # 标准专家 (Mish激活)
+        'schmid',        # 边缘检测专家 (Mish激活)
+        'gabor',        # 边缘检测专家 (Mish激活)
+        'wavelet',        # 边缘检测专家 (Mish激活)
+        'sobel',        # 边缘检测专家 (Mish激活) 
     ]
+
     normalize = False
     opts = True
     one_step = True
