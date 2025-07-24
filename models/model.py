@@ -72,7 +72,7 @@ class CDModel(nn.Module):
             for param in self.textModel.parameters():
                 param.requires_grad = False
         if not trainImg:
-            for param in self.imgModel.parameters():
+            for param in self.imglModel.parameters():
                 param.requires_grad = False
 
     def forward(self, input_v, input_q, mask=None, epoch=0):
